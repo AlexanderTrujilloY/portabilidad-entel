@@ -139,16 +139,18 @@ input{
         <span class="close" onclick="closeModal()">X</span>
         <div id="modalBody"></div>
 
-        <input type="tel" id="phone" placeholder="Ingresa tu número">
+        <input type="text" id="name" placeholder="Tu nombre">
+        <input type="tel" id="phone" placeholder="Tu número">
 
         <div class="contact-buttons">
-            <button class="call" onclick="callUser()">📞 Llamar</button>
-            <button class="whatsapp" onclick="whatsappUser()">💬 WhatsApp</button>
+            <button class="call" onclick="sendData()">📞 Deseo que me llamen</button>
+            <button class="whatsapp" onclick="whatsappUser()">💬 Más información</button>
         </div>
     </div>
 </div>
 
 <script>
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx2NYWCYLmKsSMgUC1_FzcsPmRMuB3WeCzoZ0ro0hQvXDrXUjtP9UdjyFfdNZhwzKRZ/exec";
 let selectedPlan="";
 
 function openModal(plan){
@@ -229,14 +231,35 @@ function closeModal(){
     document.getElementById("modal").style.display="none";
 }
 
-function callUser(){
-    let phone=document.getElementById("phone").value;
-    if(phone) window.location.href="tel:"+phone;
-    else alert("Ingresa un número válido");
-}
-
 function whatsappUser(){
     window.open("https://wa.me/51922547369","_blank");
+}
+
+function sendData(){
+    const name=document.getElementById("name").value;
+    const phone=document.getElementById("phone").value;
+
+    if(!name || !phone){
+        alert("Completa tu nombre y número");
+        return;
+    }
+
+    fetch(SCRIPT_URL,{
+        method:"POST",
+        body:JSON.stringify({
+            nombre:name,
+            telefono:phone,
+            plan:selectedPlan
+        }),
+        headers:{"Content-Type":"application/json"}
+    })
+    .then(()=>{
+        alert("✅ Gracias, te llamaremos pronto");
+        closeModal();
+        document.getElementById("name").value="";
+        document.getElementById("phone").value="";
+    })
+    .catch(()=>alert("❌ Error al enviar"));
 }
 </script>
 
