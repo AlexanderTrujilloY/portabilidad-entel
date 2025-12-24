@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Portabilidad Entel</title>
 
 <style>
@@ -61,11 +61,15 @@ header p{font-size:18px;}
     max-width:420px;
     padding:25px;
     border-radius:12px;
+    position: relative;
 }
 .close{
-    float:right;
+    position: absolute;
+    top: 10px;
+    right: 15px;
     cursor:pointer;
     font-weight:bold;
+    font-size: 18px;
 }
 
 .icons, .flags{
@@ -106,6 +110,16 @@ input{
 }
 .call{background:#0057b8;color:white;}
 .whatsapp{background:#25D366;color:white;}
+
+.message {
+    margin-top: 12px;
+    font-size: 14px;
+    color: green;
+    text-align: center;
+}
+.error {
+    color: red;
+}
 </style>
 </head>
 
@@ -139,127 +153,146 @@ input{
         <span class="close" onclick="closeModal()">X</span>
         <div id="modalBody"></div>
 
-        <input type="text" id="name" placeholder="Tu nombre">
-        <input type="tel" id="phone" placeholder="Tu número">
+        <input type="text" id="name" placeholder="Ingresa tu nombre" />
+        <input type="tel" id="phone" placeholder="Ingresa tu número" />
 
         <div class="contact-buttons">
-            <button class="call" onclick="sendData()">📞 Deseo que me llamen</button>
-            <button class="whatsapp" onclick="whatsappUser()">💬 Más información</button>
+            <button class="call" onclick="callUser()">📞 Llamar</button>
+            <button class="whatsapp" onclick="whatsappUser()">💬 WhatsApp</button>
         </div>
+
+        <button style="margin-top:15px; width:100%; background:#0057b8; color:white; padding:12px; border:none; border-radius:6px; font-size:16px; cursor:pointer;" onclick="sendData()">Enviar mis datos para que me llamen</button>
+
+        <div class="message" id="message"></div>
     </div>
 </div>
 
 <script>
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx2NYWCYLmKsSMgUC1_FzcsPmRMuB3WeCzoZ0ro0hQvXDrXUjtP9UdjyFfdNZhwzKRZ/exec";
-let selectedPlan="";
+let selectedPlan = "";
 
-function openModal(plan){
-    selectedPlan=plan;
-    let content="";
+function openModal(plan) {
+    selectedPlan = plan;
+    let content = "";
 
-    if(plan==="plan1"){
-        content=`
+    if (plan === "plan1") {
+        content = `
         <h3>Plan S/ 39.90</h3>
         <p>📶 75GB</p>
         <div class="icons">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/8/83/Facebook_Messenger_4_Logo.svg">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/1/1b/Facebook_icon.svg">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/8/83/Facebook_Messenger_4_Logo.svg" alt="Messenger">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/1/1b/Facebook_icon.svg" alt="Facebook">
         </div>
         <p>📞 Llamadas ilimitadas</p>
         <div class="flags">
-            <img src="https://flagcdn.com/w40/pe.png">
-            <img src="https://flagcdn.com/w40/cl.png">
-            <img src="https://flagcdn.com/w40/ca.png">
-            <img src="https://flagcdn.com/w40/us.png">
+            <img src="https://flagcdn.com/w40/pe.png" alt="Perú">
+            <img src="https://flagcdn.com/w40/cl.png" alt="Chile">
+            <img src="https://flagcdn.com/w40/ca.png" alt="Canadá">
+            <img src="https://flagcdn.com/w40/us.png" alt="Estados Unidos">
         </div>
         <p>✉️ 500 SMS</p>
         <p>➕ 30GB x 6 meses</p>`;
     }
 
-    if(plan==="plan2"){
-        content=`
+    if (plan === "plan2") {
+        content = `
         <h3>Plan S/ 49.90</h3>
         <p>📶 110GB</p>
         <div class="icons">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/8/83/Facebook_Messenger_4_Logo.svg">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/1/1b/Facebook_icon.svg">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/1/19/Spotify_logo_without_text.svg">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/8/83/Facebook_Messenger_4_Logo.svg" alt="Messenger">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/1/1b/Facebook_icon.svg" alt="Facebook">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" alt="Instagram">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/1/19/Spotify_logo_without_text.svg" alt="Spotify">
         </div>
         <p>📞 Llamadas ilimitadas</p>
         <div class="flags">
-            <img src="https://flagcdn.com/w40/pe.png">
-            <img src="https://flagcdn.com/w40/cl.png">
-            <img src="https://flagcdn.com/w40/ca.png">
-            <img src="https://flagcdn.com/w40/us.png">
+            <img src="https://flagcdn.com/w40/pe.png" alt="Perú">
+            <img src="https://flagcdn.com/w40/cl.png" alt="Chile">
+            <img src="https://flagcdn.com/w40/ca.png" alt="Canadá">
+            <img src="https://flagcdn.com/w40/us.png" alt="Estados Unidos">
         </div>
         <p>✉️ 500 SMS</p>
         <p>🌍 Roaming WhatsApp ilimitado</p>
         <p>➕ 30GB x 6 meses</p>`;
     }
 
-    if(plan==="plan3"){
-        content=`
+    if (plan === "plan3") {
+        content = `
         <h3>Plan S/ 59.90</h3>
         <p>📶 150GB</p>
         <div class="icons">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/8/83/Facebook_Messenger_4_Logo.svg">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/1/1b/Facebook_icon.svg">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/1/19/Spotify_logo_without_text.svg">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/8/83/Facebook_Messenger_4_Logo.svg" alt="Messenger">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/1/1b/Facebook_icon.svg" alt="Facebook">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" alt="Instagram">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/1/19/Spotify_logo_without_text.svg" alt="Spotify">
         </div>
         <p>📞 Llamadas ilimitadas</p>
         <div class="flags">
-            <img src="https://flagcdn.com/w40/pe.png">
-            <img src="https://flagcdn.com/w40/cl.png">
-            <img src="https://flagcdn.com/w40/ca.png">
-            <img src="https://flagcdn.com/w40/us.png">
+            <img src="https://flagcdn.com/w40/pe.png" alt="Perú">
+            <img src="https://flagcdn.com/w40/cl.png" alt="Chile">
+            <img src="https://flagcdn.com/w40/ca.png" alt="Canadá">
+            <img src="https://flagcdn.com/w40/us.png" alt="Estados Unidos">
         </div>
         <p>✉️ 500 SMS</p>
         <p>🌍 Roaming 3GB + WhatsApp ilimitado</p>
         <p>➕ 30GB x 6 meses</p>`;
     }
 
-    document.getElementById("modalBody").innerHTML=content;
-    document.getElementById("modal").style.display="flex";
+    document.getElementById("modalBody").innerHTML = content;
+    // Reset input fields and messages on open
+    document.getElementById("name").value = "";
+    document.getElementById("phone").value = "";
+    document.getElementById("message").innerHTML = "";
+    document.getElementById("modal").style.display = "flex";
 }
 
-function closeModal(){
-    document.getElementById("modal").style.display="none";
+function closeModal() {
+    document.getElementById("modal").style.display = "none";
 }
 
-function whatsappUser(){
-    window.open("https://wa.me/51922547369","_blank");
+function callUser() {
+    let phone = document.getElementById("phone").value.trim();
+    if (phone) window.location.href = "tel:" + phone;
+    else alert("Ingresa un número válido");
 }
 
-function sendData(){
-    const name=document.getElementById("name").value;
-    const phone=document.getElementById("phone").value;
+function whatsappUser() {
+    // Aquí mandamos el mensaje directo a tu número (fijo)
+    window.open("https://wa.me/51922547369", "_blank");
+}
 
-    if(!name || !phone){
-        alert("Completa tu nombre y número");
+function sendData() {
+    const name = document.getElementById("name").value.trim();
+    const phone = document.getElementById("phone").value.trim();
+    const messageDiv = document.getElementById("message");
+
+    if (!name || !phone) {
+        messageDiv.innerHTML = '<span class="error">Por favor, ingresa nombre y número válidos.</span>';
         return;
     }
 
-    fetch(SCRIPT_URL,{
-        method:"POST",
-        body:JSON.stringify({
-            nombre:name,
-            telefono:phone,
-            plan:selectedPlan
-        }),
-        headers:{"Content-Type":"application/json"}
-    })
-    .then(()=>{
-        alert("✅ Gracias, te llamaremos pronto");
-        closeModal();
-        document.getElementById("name").value="";
-        document.getElementById("phone").value="";
-    })
-    .catch(()=>alert("❌ Error al enviar"));
+    const url = "https://script.google.com/macros/s/AKfycbwhI3zAuSb4GQV_ewdJhs4uRJYhaYXaUsaTUdQHZZ5S5JeG9FXteRY677HcFyEHuA80/exec";
+
+    // Preparar los datos para enviar
+    const data = new URLSearchParams();
+    data.append('nombre', name);
+    data.append('telefono', phone);
+    data.append('plan', selectedPlan === "plan1" ? "S/ 39.90" : selectedPlan === "plan2" ? "S/ 49.90" : "S/ 59.90");
+
+    fetch(url, {
+        method: 'POST',
+        body: data,
+        mode: 'no-cors', // para evitar problemas CORS con Google Apps Script (no devuelve respuesta)
+    }).then(() => {
+        messageDiv.innerHTML = "¡Gracias! Tus datos han sido enviados.";
+        // Limpiar campos
+        document.getElementById("name").value = "";
+        document.getElementById("phone").value = "";
+    }).catch(() => {
+        messageDiv.innerHTML = '<span class="error">Error al enviar los datos. Intenta nuevamente.</span>';
+    });
 }
 </script>
 
