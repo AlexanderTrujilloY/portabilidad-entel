@@ -24,7 +24,6 @@ header h1{
 header p{
     font-size:18px;
 }
-
 .plans{
     display:flex;
     justify-content:center;
@@ -44,21 +43,22 @@ header p{
     color:#0057b8;
 }
 .plan button{
-    margin-top:10px;
+    margin-top:15px;
     padding:12px 20px;
-    width:100%;
+    background:#00c853;
+    color:white;
     border:none;
     border-radius:8px;
-    font-size:15px;
+    font-size:16px;
     cursor:pointer;
 }
-.btn-green{background:#00c853;color:white;}
-.btn-blue{background:#0057b8;color:white;}
-
 .modal{
     display:none;
     position:fixed;
-    inset:0;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
     background:rgba(0,0,0,0.6);
     justify-content:center;
     align-items:center;
@@ -79,15 +79,27 @@ header p{
     width:36px;
     margin:5px;
 }
-.icons, .flags{text-align:center;}
-
 input{
     width:100%;
     padding:10px;
-    margin:8px 0;
+    margin-top:10px;
     border-radius:6px;
     border:1px solid #ccc;
 }
+.contact-buttons{
+    display:flex;
+    gap:10px;
+    margin-top:15px;
+}
+.contact-buttons button{
+    flex:1;
+    padding:10px;
+    border:none;
+    border-radius:6px;
+    cursor:pointer;
+}
+.call{background:#0057b8;color:white;}
+.whatsapp{background:#25D366;color:white;}
 </style>
 </head>
 
@@ -95,104 +107,88 @@ input{
 
 <header>
     <h1>Cámbiate a Entel</h1>
-    <p>Planes de portabilidad con más beneficios</p>
+    <p>Planes de portabilidad con más GB y beneficios</p>
 </header>
 
 <section class="plans">
     <div class="plan">
         <h2>S/ 39.90</h2>
         <p>75GB</p>
-        <button class="btn-blue" onclick="openModal('plan1')">Ver beneficios</button>
-        <button class="btn-green" onclick="openForm('Plan 39.90')">Me interesa</button>
+        <button onclick="openModal('Plan S/ 39.90 – 75GB')">Ver beneficios</button>
     </div>
-
     <div class="plan">
         <h2>S/ 49.90</h2>
         <p>110GB</p>
-        <button class="btn-blue" onclick="openModal('plan2')">Ver beneficios</button>
-        <button class="btn-green" onclick="openForm('Plan 49.90')">Me interesa</button>
+        <button onclick="openModal('Plan S/ 49.90 – 110GB')">Ver beneficios</button>
     </div>
-
     <div class="plan">
         <h2>S/ 59.90</h2>
         <p>150GB</p>
-        <button class="btn-blue" onclick="openModal('plan3')">Ver beneficios</button>
-        <button class="btn-green" onclick="openForm('Plan 59.90')">Me interesa</button>
+        <button onclick="openModal('Plan S/ 59.90 – 150GB')">Ver beneficios</button>
     </div>
 </section>
 
-<!-- MODAL BENEFICIOS -->
 <div class="modal" id="modal">
     <div class="modal-content">
         <span class="close" onclick="closeModal()">X</span>
-        <div id="modalBody"></div>
-    </div>
-</div>
+        <h3 id="planTitle"></h3>
 
-<!-- MODAL FORM -->
-<div class="modal" id="formModal">
-    <div class="modal-content">
-        <span class="close" onclick="closeForm()">X</span>
-        <h3>Déjanos tus datos</h3>
+        <input type="text" id="name" placeholder="Tu nombre">
+        <input type="tel" id="phone" placeholder="Tu número">
 
-        <input type="text" id="nombre" placeholder="Tu nombre">
-        <input type="tel" id="telefono" placeholder="Tu celular">
-
-        <button class="btn-green" onclick="enviarFormulario()">Deseo que me llamen</button>
-
-        <a id="whatsappLink" target="_blank">
-            <button class="btn-blue">Escribirme por WhatsApp</button>
-        </a>
+        <div class="contact-buttons">
+            <button class="call" onclick="saveLead()">📞 Deseo que me llamen</button>
+            <button class="whatsapp" onclick="sendWhatsApp()">💬 WhatsApp</button>
+        </div>
     </div>
 </div>
 
 <script>
-const SHEET_URL = "PEGAR_AQUI_URL_GOOGLE_SCRIPT";
-const WHATSAPP = "https://wa.me/TU_NUMERO_AQUI";
-
-let planSeleccionado = "";
+let selectedPlan = "";
+const SHEET_URL = "PEGA_AQUI_TU_URL_DE_APPS_SCRIPT";
 
 function openModal(plan){
-    let html = {
-        plan1:`<h3>Plan 39.90</h3><p>75GB + 30GB x 6 meses</p>`,
-        plan2:`<h3>Plan 49.90</h3><p>110GB + 30GB x 6 meses</p>`,
-        plan3:`<h3>Plan 59.90</h3><p>150GB + 30GB x 6 meses</p>`
-    };
-    document.getElementById("modalBody").innerHTML = html[plan];
-    document.getElementById("modal").style.display="flex";
+    selectedPlan = plan;
+    document.getElementById("planTitle").innerText = plan;
+    document.getElementById("modal").style.display = "flex";
 }
 
-function closeModal(){document.getElementById("modal").style.display="none";}
-
-function openForm(plan){
-    planSeleccionado = plan;
-    document.getElementById("whatsappLink").href =
-        WHATSAPP + "?text=Hola, estoy interesado en el " + plan;
-    document.getElementById("formModal").style.display="flex";
+function closeModal(){
+    document.getElementById("modal").style.display = "none";
 }
 
-function closeForm(){document.getElementById("formModal").style.display="none";}
+function sendWhatsApp(){
+    let message = encodeURIComponent(
+        "Hola, estoy interesado en el " + selectedPlan
+    );
+    window.open(
+        "https://wa.me/51922547369?text=" + message,
+        "_blank"
+    );
+}
 
-function enviarFormulario(){
-    let nombre = document.getElementById("nombre").value;
-    let telefono = document.getElementById("telefono").value;
+function saveLead(){
+    let nombre = document.getElementById("name").value;
+    let telefono = document.getElementById("phone").value;
 
-    if(nombre==="" || telefono===""){
-        alert("Completa todos los campos");
+    if(!nombre || !telefono){
+        alert("Completa nombre y número");
         return;
     }
 
-    fetch(SHEET_URL,{
-        method:"POST",
-        body:JSON.stringify({
-            nombre:nombre,
-            telefono:telefono,
-            plan:planSeleccionado
+    fetch(SHEET_URL, {
+        method: "POST",
+        body: JSON.stringify({
+            nombre: nombre,
+            telefono: telefono,
+            plan: selectedPlan
         })
+    }).then(()=>{
+        alert("Datos enviados correctamente");
+        closeModal();
+    }).catch(()=>{
+        alert("Error al enviar datos");
     });
-
-    alert("Datos enviados correctamente");
-    closeForm();
 }
 </script>
 
