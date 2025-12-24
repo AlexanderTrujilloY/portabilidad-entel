@@ -2,85 +2,91 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<title>Portabilidad Entel</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portabilidad Entel</title>
 
 <style>
 body{
     margin:0;
     font-family: Arial, sans-serif;
-    background:#0033a0;
-    color:#fff;
-    text-align:center;
+    background:#f4f7fb;
 }
 header{
+    background:#0057b8;
+    color:white;
     padding:40px 20px;
+    text-align:center;
 }
-header img{
-    max-width:160px;
+header h1{
+    margin:0;
+    font-size:32px;
 }
-h1{margin:10px 0;}
+header p{
+    font-size:18px;
+}
+
 .plans{
     display:flex;
     justify-content:center;
     gap:20px;
+    padding:40px 20px;
     flex-wrap:wrap;
-    margin:40px 0;
 }
-.plan-btn{
-    background:#fff;
-    color:#0033a0;
-    padding:20px 30px;
+.plan{
+    background:white;
     border-radius:12px;
-    font-size:22px;
-    font-weight:bold;
-    cursor:pointer;
+    width:260px;
+    padding:25px;
+    text-align:center;
+    box-shadow:0 10px 25px rgba(0,0,0,0.1);
+}
+.plan h2{
+    color:#0057b8;
+}
+.plan button{
+    margin-top:15px;
+    padding:12px 20px;
+    background:#00c853;
+    color:white;
     border:none;
+    border-radius:8px;
+    font-size:16px;
+    cursor:pointer;
 }
-.plan-btn:hover{
-    background:#ff6b00;
-    color:#fff;
-}
+
 .modal{
     display:none;
     position:fixed;
-    inset:0;
-    background:rgba(0,0,0,0.7);
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,0.6);
     justify-content:center;
     align-items:center;
 }
 .modal-content{
-    background:#fff;
-    color:#000;
-    padding:25px;
-    border-radius:15px;
-    max-width:420px;
+    background:white;
     width:90%;
-    text-align:left;
+    max-width:420px;
+    padding:25px;
+    border-radius:12px;
+}
+.modal-content h3{
+    color:#0057b8;
 }
 .close{
     float:right;
     cursor:pointer;
-    font-size:20px;
-}
-.icons img{
-    width:32px;
-    margin-right:8px;
-}
-.flags img{
-    width:32px;
-    margin-right:6px;
-}
-.whatsapp{
-    display:block;
-    background:#25D366;
-    color:#fff;
-    text-align:center;
-    padding:15px;
-    border-radius:10px;
-    margin-top:20px;
-    text-decoration:none;
     font-weight:bold;
+}
+
+.icons img, .flags img{
+    width:36px;
+    margin:5px;
+}
+.icons, .flags{
+    text-align:center;
 }
 </style>
 </head>
@@ -88,98 +94,112 @@ h1{margin:10px 0;}
 <body>
 
 <header>
-    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7a/Entel_logo.svg/512px-Entel_logo.svg.png">
-    <h1>Portabilidad Entel</h1>
-    <p>Elige tu plan y porta hoy</p>
+    <h1>Cámbiate a Entel</h1>
+    <p>Planes de portabilidad con más GB y beneficios</p>
 </header>
 
-<div class="plans">
-    <button class="plan-btn" onclick="openModal('39')">S/39.90</button>
-    <button class="plan-btn" onclick="openModal('49')">S/49.90</button>
-    <button class="plan-btn" onclick="openModal('59')">S/59.90</button>
-</div>
+<section class="plans">
+    <div class="plan">
+        <h2>S/ 39.90</h2>
+        <p>75GB</p>
+        <button onclick="openModal('plan1')">Ver beneficios</button>
+    </div>
+    <div class="plan">
+        <h2>S/ 49.90</h2>
+        <p>110GB</p>
+        <button onclick="openModal('plan2')">Ver beneficios</button>
+    </div>
+    <div class="plan">
+        <h2>S/ 59.90</h2>
+        <p>150GB</p>
+        <button onclick="openModal('plan3')">Ver beneficios</button>
+    </div>
+</section>
 
+<!-- MODAL -->
 <div class="modal" id="modal">
-    <div class="modal-content" id="modalContent">
-        <span class="close" onclick="closeModal()">✖</span>
+    <div class="modal-content">
+        <span class="close" onclick="closeModal()">X</span>
+        <div id="modalBody"></div>
     </div>
 </div>
 
 <script>
 function openModal(plan){
-    let content = '';
-    if(plan==='39'){
+    let content = "";
+
+    if(plan==="plan1"){
         content = `
-        <h2>Plan S/39.90</h2>
-        <p><b>75GB</b></p>
+        <h3>Plan S/ 39.90</h3>
+        <p>📶 75GB</p>
         <div class="icons">
-            <img src="https://cdn-icons-png.flaticon.com/512/733/733585.png">
-            <img src="https://cdn-icons-png.flaticon.com/512/733/733547.png">
-            <img src="https://cdn-icons-png.flaticon.com/512/733/733579.png">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/8/83/Facebook_Messenger_4_Logo.svg">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/1/1b/Facebook_icon.svg">
         </div>
-        <p>Llamadas ilimitadas</p>
+        <p>📞 Llamadas ilimitadas</p>
         <div class="flags">
             <img src="https://flagcdn.com/w40/pe.png">
             <img src="https://flagcdn.com/w40/cl.png">
             <img src="https://flagcdn.com/w40/ca.png">
             <img src="https://flagcdn.com/w40/us.png">
         </div>
-        <p>500 SMS</p>
-        <p>+30GB por 6 meses</p>`;
-    }
-    if(plan==='49'){
-        content = `
-        <h2>Plan S/49.90</h2>
-        <p><b>110GB</b></p>
-        <div class="icons">
-            <img src="https://cdn-icons-png.flaticon.com/512/733/733585.png">
-            <img src="https://cdn-icons-png.flaticon.com/512/733/733547.png">
-            <img src="https://cdn-icons-png.flaticon.com/512/733/733579.png">
-            <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png">
-            <img src="https://cdn-icons-png.flaticon.com/512/2111/2111624.png">
-        </div>
-        <p>Llamadas ilimitadas</p>
-        <div class="flags">
-            <img src="https://flagcdn.com/w40/pe.png">
-            <img src="https://flagcdn.com/w40/cl.png">
-            <img src="https://flagcdn.com/w40/ca.png">
-            <img src="https://flagcdn.com/w40/us.png">
-        </div>
-        <p>500 SMS</p>
-        <p>Roaming WhatsApp ilimitado</p>
-        <p>+30GB por 6 meses</p>`;
-    }
-    if(plan==='59'){
-        content = `
-        <h2>Plan S/59.90</h2>
-        <p><b>150GB</b></p>
-        <div class="icons">
-            <img src="https://cdn-icons-png.flaticon.com/512/733/733585.png">
-            <img src="https://cdn-icons-png.flaticon.com/512/733/733547.png">
-            <img src="https://cdn-icons-png.flaticon.com/512/733/733579.png">
-            <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png">
-            <img src="https://cdn-icons-png.flaticon.com/512/2111/2111624.png">
-        </div>
-        <p>Llamadas ilimitadas</p>
-        <div class="flags">
-            <img src="https://flagcdn.com/w40/pe.png">
-            <img src="https://flagcdn.com/w40/cl.png">
-            <img src="https://flagcdn.com/w40/ca.png">
-            <img src="https://flagcdn.com/w40/us.png">
-        </div>
-        <p>500 SMS</p>
-        <p>Roaming 3GB + WhatsApp ilimitado</p>
-        <p>+30GB por 6 meses</p>`;
+        <p>✉️ 500 SMS</p>
+        <p>➕ 30GB x 6 meses</p>`;
     }
 
-    document.getElementById('modalContent').innerHTML =
-        `<span class="close" onclick="closeModal()">✖</span>` + content +
-        `<a class="whatsapp" href="https://wa.me/51922547369" target="_blank">Portar por WhatsApp</a>`;
-    document.getElementById('modal').style.display='flex';
+    if(plan==="plan2"){
+        content = `
+        <h3>Plan S/ 49.90</h3>
+        <p>📶 110GB</p>
+        <div class="icons">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/8/83/Facebook_Messenger_4_Logo.svg">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/1/1b/Facebook_icon.svg">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/1/19/Spotify_logo_without_text.svg">
+        </div>
+        <p>📞 Llamadas ilimitadas</p>
+        <div class="flags">
+            <img src="https://flagcdn.com/w40/pe.png">
+            <img src="https://flagcdn.com/w40/cl.png">
+            <img src="https://flagcdn.com/w40/ca.png">
+            <img src="https://flagcdn.com/w40/us.png">
+        </div>
+        <p>✉️ 500 SMS</p>
+        <p>🌍 Roaming WhatsApp ilimitado</p>
+        <p>➕ 30GB x 6 meses</p>`;
+    }
+
+    if(plan==="plan3"){
+        content = `
+        <h3>Plan S/ 59.90</h3>
+        <p>📶 150GB</p>
+        <div class="icons">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/8/83/Facebook_Messenger_4_Logo.svg">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/1/1b/Facebook_icon.svg">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/1/19/Spotify_logo_without_text.svg">
+        </div>
+        <p>📞 Llamadas ilimitadas</p>
+        <div class="flags">
+            <img src="https://flagcdn.com/w40/pe.png">
+            <img src="https://flagcdn.com/w40/cl.png">
+            <img src="https://flagcdn.com/w40/ca.png">
+            <img src="https://flagcdn.com/w40/us.png">
+        </div>
+        <p>✉️ 500 SMS</p>
+        <p>🌍 Roaming 3GB + WhatsApp ilimitado</p>
+        <p>➕ 30GB x 6 meses</p>`;
+    }
+
+    document.getElementById("modalBody").innerHTML = content;
+    document.getElementById("modal").style.display="flex";
 }
 
 function closeModal(){
-    document.getElementById('modal').style.display='none';
+    document.getElementById("modal").style.display="none";
 }
 </script>
 
