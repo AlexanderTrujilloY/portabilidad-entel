@@ -88,6 +88,37 @@ header p{
 .icons, .flags{
     text-align:center;
 }
+
+input{
+    width:100%;
+    padding:10px;
+    margin-top:10px;
+    border-radius:6px;
+    border:1px solid #ccc;
+    font-size:15px;
+}
+
+.contact-buttons{
+    display:flex;
+    gap:10px;
+    margin-top:15px;
+}
+.contact-buttons button{
+    flex:1;
+    padding:10px;
+    border:none;
+    border-radius:6px;
+    font-size:14px;
+    cursor:pointer;
+}
+.call{
+    background:#0057b8;
+    color:white;
+}
+.whatsapp{
+    background:#25D366;
+    color:white;
+}
 </style>
 </head>
 
@@ -121,11 +152,21 @@ header p{
     <div class="modal-content">
         <span class="close" onclick="closeModal()">X</span>
         <div id="modalBody"></div>
+
+        <input type="tel" id="phone" placeholder="Ingresa tu número">
+
+        <div class="contact-buttons">
+            <button class="call" onclick="callUser()">📞 Llamar</button>
+            <button class="whatsapp" onclick="whatsappUser()">💬 WhatsApp</button>
+        </div>
     </div>
 </div>
 
 <script>
+let selectedPlan = "";
+
 function openModal(plan){
+    selectedPlan = plan;
     let content = "";
 
     if(plan==="plan1"){
@@ -200,6 +241,29 @@ function openModal(plan){
 
 function closeModal(){
     document.getElementById("modal").style.display="none";
+}
+
+function callUser(){
+    let phone = document.getElementById("phone").value;
+    if(phone){
+        window.location.href = "tel:" + phone;
+    }else{
+        alert("Ingresa un número válido");
+    }
+}
+
+function whatsappUser(){
+    let phone = document.getElementById("phone").value;
+    if(phone){
+        let message = encodeURIComponent(
+            "Hola, estoy interesado en el " +
+            (selectedPlan==="plan1"?"Plan S/ 39.90":
+            selectedPlan==="plan2"?"Plan S/ 49.90":"Plan S/ 59.90")
+        );
+        window.open(`https://wa.me/51${phone}?text=${message}`, "_blank");
+    }else{
+        alert("Ingresa un número válido");
+    }
 }
 </script>
 
