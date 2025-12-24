@@ -17,6 +17,9 @@ header{
     padding:40px 20px;
     text-align:center;
 }
+header h1{margin:0;font-size:32px;}
+header p{font-size:18px;}
+
 .plans{
     display:flex;
     justify-content:center;
@@ -36,10 +39,11 @@ header{
 .plan button{
     margin-top:15px;
     padding:12px 20px;
-    background:#0057b8;
+    background:#00c853;
     color:white;
     border:none;
     border-radius:8px;
+    font-size:16px;
     cursor:pointer;
 }
 
@@ -54,7 +58,7 @@ header{
 .modal-content{
     background:white;
     width:90%;
-    max-width:450px;
+    max-width:420px;
     padding:25px;
     border-radius:12px;
 }
@@ -64,6 +68,10 @@ header{
     font-weight:bold;
 }
 
+.icons, .flags{
+    text-align:center;
+    margin:10px 0;
+}
 .icons img{
     width:40px;
     margin:6px;
@@ -71,20 +79,33 @@ header{
 .flags img{
     width:36px;
     margin:5px;
+    border-radius:4px;
 }
 
-.whatsapp-fixed{
-    position:fixed;
-    bottom:20px;
-    right:20px;
-    background:#25D366;
-    color:white;
-    padding:14px 22px;
-    border-radius:50px;
-    font-size:16px;
-    text-decoration:none;
-    box-shadow:0 5px 15px rgba(0,0,0,.3);
+input{
+    width:100%;
+    padding:10px;
+    margin-top:10px;
+    border-radius:6px;
+    border:1px solid #ccc;
+    font-size:15px;
 }
+
+.contact-buttons{
+    display:flex;
+    gap:10px;
+    margin-top:15px;
+}
+.contact-buttons button{
+    flex:1;
+    padding:10px;
+    border:none;
+    border-radius:6px;
+    font-size:14px;
+    cursor:pointer;
+}
+.call{background:#0057b8;color:white;}
+.whatsapp{background:#25D366;color:white;}
 </style>
 </head>
 
@@ -92,48 +113,50 @@ header{
 
 <header>
     <h1>Cámbiate a Entel</h1>
-    <p>Más GB, apps ilimitadas y llamadas internacionales</p>
+    <p>Planes de portabilidad con más GB y beneficios</p>
 </header>
 
 <section class="plans">
     <div class="plan">
         <h2>S/ 39.90</h2>
         <p>75GB</p>
-        <button onclick="openModal('p1')">Ver beneficios</button>
+        <button onclick="openModal('plan1')">Ver beneficios</button>
     </div>
     <div class="plan">
         <h2>S/ 49.90</h2>
         <p>110GB</p>
-        <button onclick="openModal('p2')">Ver beneficios</button>
+        <button onclick="openModal('plan2')">Ver beneficios</button>
     </div>
     <div class="plan">
         <h2>S/ 59.90</h2>
         <p>150GB</p>
-        <button onclick="openModal('p3')">Ver beneficios</button>
+        <button onclick="openModal('plan3')">Ver beneficios</button>
     </div>
 </section>
 
-<!-- MODAL -->
 <div class="modal" id="modal">
     <div class="modal-content">
         <span class="close" onclick="closeModal()">X</span>
         <div id="modalBody"></div>
+
+        <input type="tel" id="phone" placeholder="Ingresa tu número">
+
+        <div class="contact-buttons">
+            <button class="call" onclick="callUser()">📞 Llamar</button>
+            <button class="whatsapp" onclick="whatsappUser()">💬 WhatsApp</button>
+        </div>
     </div>
 </div>
 
-<!-- WHATSAPP FIJO -->
-<a class="whatsapp-fixed"
-   href="https://wa.me/51922547369?text=Hola,%20quiero%20más%20información%20sobre%20los%20planes%20Entel"
-   target="_blank">
-   💬 MÁS INFORMACIÓN
-</a>
-
 <script>
-function openModal(plan){
-    let content = "";
+let selectedPlan="";
 
-    if(plan==="p1"){
-        content = `
+function openModal(plan){
+    selectedPlan=plan;
+    let content="";
+
+    if(plan==="plan1"){
+        content=`
         <h3>Plan S/ 39.90</h3>
         <p>📶 75GB</p>
         <div class="icons">
@@ -152,8 +175,8 @@ function openModal(plan){
         <p>➕ 30GB x 6 meses</p>`;
     }
 
-    if(plan==="p2"){
-        content = `
+    if(plan==="plan2"){
+        content=`
         <h3>Plan S/ 49.90</h3>
         <p>📶 110GB</p>
         <div class="icons">
@@ -163,7 +186,7 @@ function openModal(plan){
             <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png">
             <img src="https://upload.wikimedia.org/wikipedia/commons/1/19/Spotify_logo_without_text.svg">
         </div>
-        <p>🌍 Roaming WhatsApp ilimitado</p>
+        <p>📞 Llamadas ilimitadas</p>
         <div class="flags">
             <img src="https://flagcdn.com/w40/pe.png">
             <img src="https://flagcdn.com/w40/cl.png">
@@ -171,11 +194,12 @@ function openModal(plan){
             <img src="https://flagcdn.com/w40/us.png">
         </div>
         <p>✉️ 500 SMS</p>
+        <p>🌍 Roaming WhatsApp ilimitado</p>
         <p>➕ 30GB x 6 meses</p>`;
     }
 
-    if(plan==="p3"){
-        content = `
+    if(plan==="plan3"){
+        content=`
         <h3>Plan S/ 59.90</h3>
         <p>📶 150GB</p>
         <div class="icons">
@@ -185,7 +209,7 @@ function openModal(plan){
             <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png">
             <img src="https://upload.wikimedia.org/wikipedia/commons/1/19/Spotify_logo_without_text.svg">
         </div>
-        <p>🌍 Roaming 3GB + WhatsApp ilimitado</p>
+        <p>📞 Llamadas ilimitadas</p>
         <div class="flags">
             <img src="https://flagcdn.com/w40/pe.png">
             <img src="https://flagcdn.com/w40/cl.png">
@@ -193,15 +217,26 @@ function openModal(plan){
             <img src="https://flagcdn.com/w40/us.png">
         </div>
         <p>✉️ 500 SMS</p>
+        <p>🌍 Roaming 3GB + WhatsApp ilimitado</p>
         <p>➕ 30GB x 6 meses</p>`;
     }
 
-    document.getElementById("modalBody").innerHTML = content;
+    document.getElementById("modalBody").innerHTML=content;
     document.getElementById("modal").style.display="flex";
 }
 
 function closeModal(){
     document.getElementById("modal").style.display="none";
+}
+
+function callUser(){
+    let phone=document.getElementById("phone").value;
+    if(phone) window.location.href="tel:"+phone;
+    else alert("Ingresa un número válido");
+}
+
+function whatsappUser(){
+    window.open("https://wa.me/51922547369","_blank");
 }
 </script>
 
