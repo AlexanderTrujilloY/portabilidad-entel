@@ -2,128 +2,186 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
+<title>Portabilidad Entel</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Ofertas de Portabilidad Entel</title>
+
 <style>
-  body {
-    margin: 0;
+body{
+    margin:0;
     font-family: Arial, sans-serif;
-    background: #f9fbff;
-    color: #333;
-  }
-  .header {
-    background: #003bb5;
-    color: white;
-    text-align: center;
-    padding: 40px 20px;
-  }
-  .header h1 {
-    font-size: 32px;
-    margin: 0;
-  }
-  .header p {
-    font-size: 18px;
-    margin-top: 8px;
-  }
-  .btn {
-    background: #00c853;
-    color: white;
-    padding: 14px 28px;
-    font-size: 18px;
-    border: none;
-    border-radius: 8px;
-    text-decoration: none;
-    display: inline-block;
-    margin-top: 15px;
-    font-weight: bold;
-  }
-  .section {
-    margin: 30px 20px;
-    padding: 25px;
-    background: white;
-    border-radius: 10px;
-    box-shadow: 0px 4px 10px rgba(0,0,0,0.06);
-  }
-  .section h2 {
-    color: #003bb5;
-    margin-top: 0;
-  }
-  .plan-box {
-    border: 2px solid #003bb5;
-    border-radius: 10px;
-    margin-top: 15px;
-    padding: 20px;
-    background: #e6eeff;
-  }
-  .plan-title {
-    font-size: 26px;
-    color: #003bb5;
-    margin-bottom: 10px;
-  }
-  .feature-list {
-    list-style: none;
-    padding-left: 0;
-  }
-  .feature-list li {
-    margin: 8px 0;
-    font-size: 17px;
-  }
-  footer {
-    text-align: center;
-    padding: 18px;
-    font-size: 14px;
-    color: #555;
-  }
+    background:#0033a0;
+    color:#fff;
+    text-align:center;
+}
+header{
+    padding:40px 20px;
+}
+header img{
+    max-width:160px;
+}
+h1{margin:10px 0;}
+.plans{
+    display:flex;
+    justify-content:center;
+    gap:20px;
+    flex-wrap:wrap;
+    margin:40px 0;
+}
+.plan-btn{
+    background:#fff;
+    color:#0033a0;
+    padding:20px 30px;
+    border-radius:12px;
+    font-size:22px;
+    font-weight:bold;
+    cursor:pointer;
+    border:none;
+}
+.plan-btn:hover{
+    background:#ff6b00;
+    color:#fff;
+}
+.modal{
+    display:none;
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,0.7);
+    justify-content:center;
+    align-items:center;
+}
+.modal-content{
+    background:#fff;
+    color:#000;
+    padding:25px;
+    border-radius:15px;
+    max-width:420px;
+    width:90%;
+    text-align:left;
+}
+.close{
+    float:right;
+    cursor:pointer;
+    font-size:20px;
+}
+.icons img{
+    width:32px;
+    margin-right:8px;
+}
+.flags img{
+    width:32px;
+    margin-right:6px;
+}
+.whatsapp{
+    display:block;
+    background:#25D366;
+    color:#fff;
+    text-align:center;
+    padding:15px;
+    border-radius:10px;
+    margin-top:20px;
+    text-decoration:none;
+    font-weight:bold;
+}
 </style>
 </head>
+
 <body>
 
-  <div class="header">
-    <h1>Ofertas de Portabilidad Entel</h1>
-    <p>¡Disfruta grandes beneficios y descuento por portar tu línea!</p>
-    <a class="btn" href="https://wa.me/51922547369" target="_blank">Lo quiero ahora</a>
-  </div>
+<header>
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7a/Entel_logo.svg/512px-Entel_logo.svg.png">
+    <h1>Portabilidad Entel</h1>
+    <p>Elige tu plan y porta hoy</p>
+</header>
 
-  <div class="section">
-    <h2>Oferta Principal - Multilínea</h2>
-    <div class="plan-box">
-      <div class="plan-title">Plan MultiLínea Entel</div>
-      <ul class="feature-list">
-        <li>✔ Línea principal desde S/ 49.90</li>
-        <li>✔ Línea adicional desde S/ 19.95 x 3 meses</li>
-        <li>✔ Más GB por línea</li>
-        <li>✔ Apps y minutos ilimitados</li>
-      </ul>
-      <a class="btn" href="https://wa.me/51922547369" target="_blank">Lo quiero</a>
+<div class="plans">
+    <button class="plan-btn" onclick="openModal('39')">S/39.90</button>
+    <button class="plan-btn" onclick="openModal('49')">S/49.90</button>
+    <button class="plan-btn" onclick="openModal('59')">S/59.90</button>
+</div>
+
+<div class="modal" id="modal">
+    <div class="modal-content" id="modalContent">
+        <span class="close" onclick="closeModal()">✖</span>
     </div>
-  </div>
+</div>
 
-  <div class="section">
-    <h2>¿Por qué Entel?</h2>
-    <ul class="feature-list">
-      <li>✔ Cobertura nacional y señal estable</li>
-      <li>✔ Proceso rápido de portabilidad</li>
-      <li>✔ Mantienes tu número actual</li>
-      <li>✔ Promociones exclusivas por web</li>
-    </ul>
-  </div>
+<script>
+function openModal(plan){
+    let content = '';
+    if(plan==='39'){
+        content = `
+        <h2>Plan S/39.90</h2>
+        <p><b>75GB</b></p>
+        <div class="icons">
+            <img src="https://cdn-icons-png.flaticon.com/512/733/733585.png">
+            <img src="https://cdn-icons-png.flaticon.com/512/733/733547.png">
+            <img src="https://cdn-icons-png.flaticon.com/512/733/733579.png">
+        </div>
+        <p>Llamadas ilimitadas</p>
+        <div class="flags">
+            <img src="https://flagcdn.com/w40/pe.png">
+            <img src="https://flagcdn.com/w40/cl.png">
+            <img src="https://flagcdn.com/w40/ca.png">
+            <img src="https://flagcdn.com/w40/us.png">
+        </div>
+        <p>500 SMS</p>
+        <p>+30GB por 6 meses</p>`;
+    }
+    if(plan==='49'){
+        content = `
+        <h2>Plan S/49.90</h2>
+        <p><b>110GB</b></p>
+        <div class="icons">
+            <img src="https://cdn-icons-png.flaticon.com/512/733/733585.png">
+            <img src="https://cdn-icons-png.flaticon.com/512/733/733547.png">
+            <img src="https://cdn-icons-png.flaticon.com/512/733/733579.png">
+            <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png">
+            <img src="https://cdn-icons-png.flaticon.com/512/2111/2111624.png">
+        </div>
+        <p>Llamadas ilimitadas</p>
+        <div class="flags">
+            <img src="https://flagcdn.com/w40/pe.png">
+            <img src="https://flagcdn.com/w40/cl.png">
+            <img src="https://flagcdn.com/w40/ca.png">
+            <img src="https://flagcdn.com/w40/us.png">
+        </div>
+        <p>500 SMS</p>
+        <p>Roaming WhatsApp ilimitado</p>
+        <p>+30GB por 6 meses</p>`;
+    }
+    if(plan==='59'){
+        content = `
+        <h2>Plan S/59.90</h2>
+        <p><b>150GB</b></p>
+        <div class="icons">
+            <img src="https://cdn-icons-png.flaticon.com/512/733/733585.png">
+            <img src="https://cdn-icons-png.flaticon.com/512/733/733547.png">
+            <img src="https://cdn-icons-png.flaticon.com/512/733/733579.png">
+            <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png">
+            <img src="https://cdn-icons-png.flaticon.com/512/2111/2111624.png">
+        </div>
+        <p>Llamadas ilimitadas</p>
+        <div class="flags">
+            <img src="https://flagcdn.com/w40/pe.png">
+            <img src="https://flagcdn.com/w40/cl.png">
+            <img src="https://flagcdn.com/w40/ca.png">
+            <img src="https://flagcdn.com/w40/us.png">
+        </div>
+        <p>500 SMS</p>
+        <p>Roaming 3GB + WhatsApp ilimitado</p>
+        <p>+30GB por 6 meses</p>`;
+    }
 
-  <div class="section">
-    <h2>Requisitos para Portarte</h2>
-    <ul class="feature-list">
-      <li>• DNI vigente</li>
-      <li>• Línea activa</li>
-      <li>• No tener deuda vencida</li>
-    </ul>
-  </div>
+    document.getElementById('modalContent').innerHTML =
+        `<span class="close" onclick="closeModal()">✖</span>` + content +
+        `<a class="whatsapp" href="https://wa.me/51922547369" target="_blank">Portar por WhatsApp</a>`;
+    document.getElementById('modal').style.display='flex';
+}
 
-  <div class="section">
-    <h2>Asesor Autorizado</h2>
-    <p>📲 <a href="https://wa.me/51922547369">922 547 369</a> - Atención personalizada</p>
-    <p>✔ Sin adelantos • ✔ Proceso seguro</p>
-  </div>
-
-  <footer>© 2025 Portabilidad Entel – Atención inmediata</footer>
+function closeModal(){
+    document.getElementById('modal').style.display='none';
+}
+</script>
 
 </body>
 </html>
